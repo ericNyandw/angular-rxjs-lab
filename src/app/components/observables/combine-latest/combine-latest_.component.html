@@ -1,7 +1,7 @@
-<h3>Tableau de bord</h3>
+<h3> Ex1 - Tableau de bord</h3>
 <p>
   Nom de l'utilisateur :
-  <input type="text" (input)="nomUtilisateur.next($event.target.value)" />
+  <input type="text" (input)="nomUtilisateur.next($any($event.target).value)" />
 </p>
 <p>
   Statut de commande :
