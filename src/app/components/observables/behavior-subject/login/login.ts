@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EtatConnexion} from '../../../../core/services/etat-connexion';
 import { Subscription} from 'rxjs';
 
@@ -28,14 +28,12 @@ import { Subscription} from 'rxjs';
   `,
   styles: ``,
 })
-export class Login implements OnInit , OnDestroy {
+export class Login implements OnInit  {
   statutConnexion: string = '';
   message: string = 'LoginComponent: Souscription au BehaviorSubject.';
   constructor(private readonly etatConnexionService: EtatConnexion) {}
 
-  ngOnDestroy(): void {
-        throw new Error("Method not implemented.");
-    }
+
   estConnecte$!: Subscription ;
   ngOnInit() {
     // Ce composant arrive plus tard (par exemple, après une navigation)

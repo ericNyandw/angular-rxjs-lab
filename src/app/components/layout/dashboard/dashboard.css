@@ -1,0 +1,51 @@
+/* --- STYLES DE BASE --- */
+.sidebar {
+  background-color: #212529;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, .5);
+  padding: 10px 20px;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- LOGIQUE RESPONSIVE --- */
+
+/* 1. Sur PC (Écrans larges >= 768px) */
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed; /* Le menu reste à gauche au scroll */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 100vh;
+    padding-top: 48px;
+  }
+
+  main {
+    margin-left: 25%; /* On pousse le contenu pour laisser la place au menu */
+  }
+}
+
+/* 2. Sur Mobile/Tablette (Écrans < 768px) */
+@media (max-width: 767.98px) {
+  .sidebar {
+    position: relative !important;
+    height: auto !important;
+    width: 100vw !important; /* vw = largeur totale de la vue */
+    margin-left: calc(-50vw + 50%); /* Technique pour sortir des containers parents si besoin */
+    margin-right: calc(-50vw + 50%);
+    padding: 20px 0;
+  }
+
+  main {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding-left: 15px !important; /* On garde juste un petit padding pour le texte */
+    padding-right: 15px !important;
+  }
+}

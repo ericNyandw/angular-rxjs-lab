@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- MENU LATÉRAL (Sidebar) -->
+    <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar vh-100 position-fixed">
+      <div class="position-sticky pt-3">
+        <h5 class="text-white px-3 mb-4">🔬 RxJS Lab</h5>
+
+        <!-- SECTION 1 : CRÉATION -->
+        <h6 class="sidebar-heading px-3 mt-4 mb-1 text-muted text-uppercase small">
+          <span>1. Création</span>
+        </h6>
+        <ul class="nav flex-column mb-3">
+          <li class="nav-item">
+            <a class="nav-link text-white-50" routerLink="/creation/basic" routerLinkActive="text-warning fw-bold">
+              🐣 Basic (of, from)
+            </a>
+          </li>
+        </ul>
+
+        <!-- SECTION 2 : TRANSFORMATION -->
+        <h6 class="sidebar-heading px-3 mt-4 mb-1 text-muted text-uppercase small">
+          <span>2. Transformation</span>
+        </h6>
+        <ul class="nav flex-column mb-3">
+          <li class="nav-item">
+            <a class="nav-link text-white-50" routerLink="/transformation/switch-map" routerLinkActive="text-warning fw-bold">
+              📺 SwitchMap (La Télé)
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white-50" routerLink="/transformation/combine-latest" routerLinkActive="text-warning fw-bold">
+              🔀 CombineLatest
+            </a>
+          </li>
+        </ul>
+
+        <!-- SECTION 3 : ÉTAT & SUJETS -->
+        <h6 class="sidebar-heading px-3 mt-4 mb-1 text-muted text-uppercase small">
+          <span>3. État & Sujets</span>
+        </h6>
+        <ul class="nav flex-column mb-3">
+          <li class="nav-item">
+            <a class="nav-link text-white-50" routerLink="/subjects/behavior" routerLinkActive="text-warning fw-bold">
+              🧠 BehaviorSubject
+            </a>
+          </li>
+        </ul>
+
+      </div>
+    </nav>
+
+    <!-- ZONE DE CONTENU (À droite) -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 bg-light min-vh-100">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Laboratoire interactif</h1>
+      </div>
+
+      <!-- Ici s'afficheront tes composants -->
+      <div class="container py-2">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>

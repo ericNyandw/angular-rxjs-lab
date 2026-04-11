@@ -32,8 +32,14 @@ Il ne donne jamais une valeur isolée, mais toujours **un “instantané” glob
 > `combineLatest` émet une nouvelle valeur **à chaque fois qu’un des Observables qu’il surveille émet**,  
 > et cette valeur est **la combinaison des toutes dernières valeurs de chacun des Observables**.
 
----
+## 🧩 Principe de fonctionnement (A suivre dans la logique de code) :
 
+Le principe est simple :
+1. `combineLatest` attend que **chaque**  Observable d'entrée ait émis au moins une valeur.
+2. Une fois que cette condition est remplie, le nouvel Observable émet un tableau contenant la dernière valeur de chaque flux d'entrée.
+3. Par la suite, chaque fois que l'un des flux d'entrée émet une nouvelle valeur, l'Observable de sortie émet immédiatement un nouveau tableau avec les dernières valeurs de tous les flux
+
+N.B: La principale différence est que synchrone signifie "en même temps" et asynchrone signifie "pas en même temps"
 ## 💻 Exemple concret : tableau de bord réactif
 
 Prenons un exemple simple : un **tableau de bord** qui affiche des informations filtrées selon deux critères (nom d’utilisateur et statut de commande).  
