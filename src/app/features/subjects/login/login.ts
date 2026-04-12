@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EtatConnexion} from '../../../../core/services/etat-connexion';
+import {EtatConnexion} from '../../../core/services/etat-connexion';
 import { Subscription} from 'rxjs';
 
 

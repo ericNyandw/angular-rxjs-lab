@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EtatConnexion} from '../../../../core/services/etat-connexion';
+import {EtatConnexion} from '../../../core/services/etat-connexion';
 
 @Component({
   selector: 'app-header',

@@ -5,7 +5,7 @@ import {CommonModule} from '@angular/common';
 @Component({
   selector: 'app-dashboard',
   imports: [
-    RouterOutlet,CommonModule, RouterModule
+    RouterOutlet,RouterModule, CommonModule
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',

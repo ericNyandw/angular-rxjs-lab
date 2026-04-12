@@ -1,11 +1,12 @@
-import { AsyncPipe } from '@angular/common';
+import {AsyncPipe, CommonModule} from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {combineLatest, BehaviorSubject, Observable, of, interval, take} from 'rxjs';
 import { map } from 'rxjs/operators';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-combine-latest',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe,CommonModule, ReactiveFormsModule],
   templateUrl: './combine-latest_.component.html',
   styleUrl: './combine-latest_.component.css',
 })
