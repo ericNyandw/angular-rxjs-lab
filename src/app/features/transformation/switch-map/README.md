@@ -19,9 +19,9 @@ Imaginez que vous avez une télécommande entre les mains pour changer de chaîn
 
 📋 **Déroulement du scénario**
 
-1.🖱️ L'utilisateur clique sur la touche **"1"**. Le chargement commence (1 seconde).
-2. ⚡ 0.5s plus tard, l'utilisateur clique sur la touche **"2"**.
-3. 🚫 Le switchMap annule immédiatement la requête pour la chaîne "1".
+1. 🖱️ L'utilisateur clique sur la touche **"1"**. Le chargement commence (1 seconde).
+2.  ⚡ 0.5s plus tard, l'utilisateur clique sur la touche **"2"**. 
+3. 🚫 Le switchMap annule immédiatement la requête pour la chaîne "1". 
 4. 📺 Après 1s, seule la chaîne **"2"** s'affiche à l'écran
 
 💻 **Exemple pratique (Simplifié)**
