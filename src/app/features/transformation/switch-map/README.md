@@ -1,190 +1,60 @@
-# 🌀 BehaviorSubject : La météo en direct
+# 🔄 SwitchMap
 ✍️ Auteur : [NYERDI]
-## 🧠 Concept
+## 11. Sa Nature
+- **Opérateur de transformation** utilisé dans le .pipe().
+- **Son rôle**: 
+   >permet de passer d'un flux de données à un autre,
+     c-à-d Dès qu'une nouvelle donnée arrive sur la source,
+     Si l'Observable précédent n'était pas terminé, il est annulé et 
+     l'Observer ne reçoit ainsi que les données du tout dernier flux de données.
 
-Imaginez que vous arrivez sur une place publique pour connaître la météo :
+📺 **L'analogie de la Télécommande**
+Imaginez que vous avez une télécommande entre les mains pour changer de chaîne :
 
-- Le **bulletin météo** est diffusé en continu sur un grand écran → **c’est le `BehaviorSubject`**.
-- L’écran affiche **toujours la météo actuelle**. Même si vous arrivez après le début, vous voyez immédiatement l’information du moment.
-- Dès que vous **regardez l’écran** (vous vous abonnez), vous voyez la **valeur actuelle** sans attendre la prochaine mise à jour.
-- Ensuite, **chaque changement de météo** est diffusé à **tous les observateurs en même temps** — comme un `Subject` classique.
+- Vous appuyez sur la touche **1** pour voir TF1. La télé commence à chercher le signal → c'est le déclenchement de l'Observable.
+- Mais avant que l'image n'apparaisse, vous changez d'avis et vous appuyez sur la touche 2 pour RTL.
+- Le **switchMap** ordonne immédiatement à la télé d'**arrêter de chercher la chaîne 1 (annulation)**
+  pour se concentrer uniquement sur la chaîne 2.
+- Seule la **dernière commande** arrive jusqu'à l'écran.
 
-💡 La différence clé avec un `Subject` simple :
-> Le `BehaviorSubject` garde en mémoire **la dernière valeur émise** et la renvoie immédiatement à tout nouvel abonné.
+📋 **Déroulement du scénario**
 
----
+1.🖱️ L'utilisateur clique sur la touche **"1"**. Le chargement commence (1 seconde).
+2. ⚡ 0.5s plus tard, l'utilisateur clique sur la touche **"2"**.
+3. 🚫 Le switchMap annule immédiatement la requête pour la chaîne "1".
+4. 📺 Après 1s, seule la chaîne **"2"** s'affiche à l'écran
 
-## ⚙️ Caractéristiques principales
-
-- 🔹 **Valeur initiale obligatoire**  
-  Le `BehaviorSubject` doit toujours avoir une valeur de départ (ex. `false`, `0`, `""`...).
-
-- 🔹 **Diffuse la dernière valeur aux nouveaux abonnés**  
-  Tout abonné reçoit immédiatement la dernière valeur connue.
-
-- 🔹 **Fonctionne comme un Subject ensuite**  
-  Après la première émission, il notifie tous les abonnés à chaque nouvelle valeur.
-
-- 🔹 **Accès direct à la valeur courante**  
-  Vous pouvez récupérer la dernière valeur sans vous abonner via la propriété `.value`.
-
----
-
-## 🧭 Quand utiliser un BehaviorSubject ?
-
-Le `BehaviorSubject` est idéal pour la **gestion d’état** dans une application :  
-il conserve un état courant et informe tous les abonnés de ses changements.
-
-### Exemples typiques :
-- 👤 **Statut de connexion utilisateur** (`true` / `false`)
-- 🌗 **Thème de l’application** (clair / sombre)
-- 🛒 **Données d’un panier d’achat**
-- 📡 **Données partagées entre composants**
-
----
-
-## 💻 Exemple pratique : Gestion d’état de connexion
-
-### 📁 `etat-connexion.service.ts`
-
+💻 **Exemple pratique (Simplifié)**
+💡 Note sur l'exécution : Comme les touches "1", "3", "6" sont envoyées très vite, switchMap va annuler "1" puis "3" pour ne garder que "6". Seul le libellé de la dernière touche s'affichera après le délai.
 ```typescript
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+const telecommande$ = of("1", "3", "6"); // On appuie sur 1, puis 3, puis 6
+const stationsTv$ = of([
+  { ref: "1", libelle: "TF1" },
+  { ref: "2", libelle: "RTL-BE"},
+  { ref: "3", libelle: "FRANC3" },
+  // ... reste de la liste
+]);
 
-@Injectable({
-  providedIn: 'root'
-})
-export class EtatConnexionService {
-  // Création du BehaviorSubject avec une valeur initiale de `false`
-  private _estConnecte = new BehaviorSubject<boolean>(false);
-
-  // Exposition du flux en tant qu'Observable public
-  estConnecte$: Observable<boolean> = this._estConnecte.asObservable();
-
-  // Méthodes de mise à jour de l’état
-  seConnecter() {
-    console.log('Utilisateur connecté !');
-    this._estConnecte.next(true);
-  }
-
-  seDeconnecter() {
-    console.log('Utilisateur déconnecté !');
-    this._estConnecte.next(false);
-  }
-}
-```
-
-### 🧩 `header.component.ts`
-
-```typescript
-import {Component, OnInit} from '@angular/core';
-import {EtatConnexion} from '../../../../core/services/etat-connexion';
-
-@Component({
-  selector: 'app-header',
-  imports: [],
-  template: `
-    <div class="container">
-       <div class="row">
-         <span class="badge bg-primary">{{ message }}</span>
-         cas d'etat de connexion connexion heard : {{ statutConnexion }}
-       </div>
-    </div>
-  `,
-  styles: ``,
-})
-export class Header  implements OnInit {
-  statutConnexion: string = '';
-  message: string = 'HeaderComponent: Souscription au BehaviorSubject.';
-  constructor(private readonly etatConnexionService: EtatConnexion) {
-  }
-
-  ngOnInit() {
-    console.log(this.message);
-    this.etatConnexionService.estConnecte$.subscribe(estConnecte => {
-      this.statutConnexion = estConnecte ? 'Connecté' : 'Déconnecté';
-    });
-  }
-}
-```
-
-
-### 🧩 `login.component.ts`
-```typescript
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {EtatConnexion} from '../../../../core/services/etat-connexion';
-import {Observable, Subscription} from 'rxjs';
-
-
-@Component({
-selector: 'app-login',
-imports: [
-],
-template: `
-<div class="container">
-
-      <div class="row">
-        <span class="badge bg-primary">{{ message }}</span>
-       cas d'etat de connexion login : {{ statutConnexion }}
-      </div>
-
-      <div class="d-flex justify-content-center align-items-center p-3">
-        <!-- Bouton de connexion : affiché si l'utilisateur N'EST PAS connecté -->
-        @if (estConnecte$ ) {
-          <button class="btn btn-success" (click)="demarrerConnexion()">Se connecter</button>
-          <!-- Bouton de déconnexion : affiché si l'utilisateur EST connecté -->
-        } @else {
-          <button class="btn btn-danger" (click)="deconnecter()">Se déconnecter</button>
-        }
-      </div>
-    </div>
-`,
-styles: ``,
-})
-export class Login implements OnInit , OnDestroy {
-statutConnexion: string = '';
-message: string = 'LoginComponent: Souscription au BehaviorSubject.';
-constructor(private readonly etatConnexionService: EtatConnexion) {}
-
-ngOnDestroy(): void {
-throw new Error("Method not implemented.");
-}
-estConnecte$!: Subscription ;
-ngOnInit() {
-// Ce composant arrive plus tard (par exemple, après une navigation)
-// Il va immédiatement recevoir l'état actuel
-setTimeout(() => {
-console.log(this.message);
-this.estConnecte$ =this.etatConnexionService.estConnecte$.subscribe(estConnecte => {
-this.statutConnexion = estConnecte ? 'Connecté' : 'Déconnecté';
+telecommande$.pipe(
+  // Si on appuie sur 1, 3, 6 très vite : 1 et 3 sont annulés immédiatement
+  switchMap(touche => 
+    stationsTv$.pipe(
+      // On cherche la chaîne qui correspond au numéro pressé
+      map(liste => liste.find(chaine => chaine.ref === touche)),
+      delay(1000) // Le délai permet de simuler l'attente du signal
+    )
+  )
+).subscribe(resultat => {
+  // Résultat final après 1s : "Ma télé affiche : FRANC3" (la touche 6 n'est pas dans la liste)
+  console.log("Ma télé affiche :", resultat?.libelle);
 });
-}, 2000);
-}
-
-demarrerConnexion() {
-this.etatConnexionService.seConnecter();
-}
-deconnecter() {
-this.etatConnexionService.seDeconnecter();
-}
-}
 ```
-📋 Déroulement du scénario
+⚙️ Caractéristiques principales
+- 🔹 **Annule les flux en cours**
+Dès qu'une nouvelle valeur est émise par la source, il se désabonne de l'observable précédent.
+- 🔹 **Idéal pour l'asynchrone**
+Parfait pour les requêtes HTTP où seule la réponse la plus récente nous intéresse.
+- 🔹 **Évite les résultats désordonnés**
+Il garantit que les données affichées correspondent toujours à la toute dernière action utilisateur.
 
-1. 🕓 Au démarrage, HeaderComponent s’abonne et reçoit immédiatement false.
-
-2. ⏱️ Deux secondes plus tard, LoginComponent s’abonne et reçoit lui aussi false.
-
-3. 🖱️ L’utilisateur clique sur "Se connecter" → le service émet true.
-
-4. 🔁 Les deux composants (Header et Login) sont immédiatement notifiés et se mettent à jour.
-
-###🧩 `Différence avec un Subject classique`
-Type	           Valeur initiale	Envoie la dernière valeur aux nouveaux abonnés	Exemple d’usage
-Subject	             ❌ Non	      ❌ Non	                                        Événements ponctuels
-BehaviorSubject	     ✅ Oui	      ✅ Oui	                                        États persistants (connexion, thème, etc.)
-
-### 🎓 `En résumé`
-
-> Le BehaviorSubject est comme une radio qui diffuse en continu,
-> et chaque nouvel auditeur entend immédiatement la dernière chanson diffusée.
+> Pour visualiser concrètement cette analogie de la télécommande, vous pouvez tester l'exemple complet sur l'interface locale : http://localhost:4200/transformation/switch-map. 
