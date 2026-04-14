@@ -1,1 +1,54 @@
-<p>switch-map works!  JE suis la switch-map </p>
+<div class="container py-4">
+  <div class="row align-items-center justify-content-center">
+
+    <!-- 1. LA TÉLÉCOMMANDE (Visualisation des touches) -->
+    <div class="col-md-4 mb-4">
+      <div class="card bg-dark shadow-lg rounded-5 border-secondary overflow-hidden">
+        <div class="card-body p-4">
+          <h6 class="text-secondary text-center text-uppercase mb-4">Remote Control</h6>
+          <!-- Dans la partie Télécommande -->
+          <div class="row g-2">
+            @for (n of remoteControle; track n) {
+              <div class="col-4">
+                <button (click)="onZapping(n)"
+                        class="btn btn-outline-warning w-100 rounded-circle py-3 shadow-sm">
+                  {{ n }}
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. L'ÉCRAN TV (Résultat du SwitchMap) -->
+    <div class="col-md-7">
+      <div class="tv-container position-relative">
+        <!-- Le cadre de la télé -->
+        <div class="bg-black rounded-4 border border-5 border-secondary shadow-lg p-5 text-center min-vh-50 d-flex flex-column align-items-center justify-content-center"
+             style="min-height: 300px; background: radial-gradient(circle, #1a1a1a 0%, #000 100%);">
+
+          <!-- Utilisation du Pipe Async avec la nouvelle syntaxe -->
+          @if (stationTv$ | async; as station) {
+            <div class="animate-fade-in">
+              <span class="badge bg-danger mb-3">DIRECT</span>
+              <h1 class="display-1 fw-bold text-white mb-0">{{ station.ref }}</h1>
+              <h2 class="text-warning text-uppercase ls-wide">{{ station.libelle }}</h2>
+            </div>
+          } @else {
+            <!-- État de chargement / Zapping -->
+            <div class="text-info text-center">
+              <div class="spinner-grow mb-3" role="status"></div>
+              <p class="h4 text-uppercase fw-light">Zapping en cours...</p>
+              <small class="text-muted">Analyse du signal SwitchMap...</small>
+            </div>
+          }
+
+        </div>
+        <!-- Le pied de la télé -->
+        <div class="bg-secondary mx-auto rounded-bottom" style="width: 150px; height: 10px;"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
