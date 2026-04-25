@@ -1,6 +1,6 @@
 # 🔄 SwitchMap
 ✍️ Auteur : [NYERDI]
-## 11. Sa Nature
+## 1. Sa Nature
 - **Opérateur de transformation** utilisé dans le .pipe().
 - **Son rôle**: 
    >permet de passer d'un flux de données à un autre,

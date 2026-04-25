@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Hotel} from '../../../../shared/models/hotel';
-import {CurrencyPipe, NgClass, NgOptimizedImage} from '@angular/common';
+import {CurrencyPipe, NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-hotel-card',
