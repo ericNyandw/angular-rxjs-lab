@@ -1,0 +1,44 @@
+<div class="card h-100 hotel-card" (click)="onSelect()">
+  <img
+    [src]="hotelF.imageUrl"
+    class="card-img-top"
+    alt="{{ hotelF.hotelName }}" />
+
+  <div class="card-body d-flex flex-column">
+    <h6 class="card-title mb-1">{{ hotelF.hotelName }}</h6>
+    <p class="text-muted small mb-2">{{ hotelF.description }}</p>
+
+    <p class="mb-2">
+      <strong>{{ hotelF.price | currency }}</strong>
+    </p>
+
+    <p class="mb-2">
+
+      @if (hotelF.rating; as r) {
+        <span class="text-warning">
+          @for (s of [1,2,3,4,5]; track s; let i = $index) {
+            <i
+              class="bi bi-star-fill"
+              [ngClass]="{'opacity-25': i + 1 > r}">
+        </i>
+          }
+          <!-- @empty n'est pas strictement nécessaire ici car le tableau [1,2,3,4,5] n'est jamais vide -->
+    </span>
+        <span class="small text-muted ms-1">({{ r }})</span>
+      }
+    </p>
+    <div class="mt-auto">
+      <!-- On vérifie si hotel.tags existe ET s'il a au moins un élément -->
+      @if (hotelF.tags && hotelF.tags.length > 0) {
+        @for (tag of hotelF.tags; track tag) {
+          <span class="badge bg-info text-dark me-1">
+        {{ tag }}
+      </span>
+        }
+      } @else {
+        <span class="small text-muted">Aucun tag</span>
+      }
+    </div>
+  </div>
+</div>
+

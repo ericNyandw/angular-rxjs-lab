@@ -1,0 +1,15 @@
+
+.hotel-card {
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hotel-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.75rem 1.25rem rgba(0, 0, 0, 0.1);
+}
+
+.hotel-card img {
+  height: 160px;
+  object-fit: cover;
+}

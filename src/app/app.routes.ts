@@ -9,6 +9,10 @@ export const routes: Routes = [
       { path: 'creation/basic',
        loadComponent:()=>import('./features/creation/observable-basic/observable-basic').then(m=>m.ObservableBasic),},
       {
+        path: 'observable',
+        loadChildren: () => import('./features/observable-simple/basic-observable.routes').then(m => m.BASIC_OBSERVABLE_ROUTES)
+      },
+      {
         path: 'transformation',
         loadChildren: () => import('./features/transformation/transformation.routes').then(m => m.TRANSFORMATION_ROUTES)
       },
