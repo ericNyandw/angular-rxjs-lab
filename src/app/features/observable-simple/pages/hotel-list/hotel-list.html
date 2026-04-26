@@ -1,20 +1,38 @@
 <div class="page-container">
   <div class="row">
     <div class="col-12">
-      <div class="card mb-3">
+      <!-- 1. TITRE ET BOUTON REFRESH -->
+      <div class="card mb-3 border-0 shadow-sm">
         <div class="card-body d-flex justify-content-between align-items-center">
           <div>
-            <h5 class="card-title mb-1">Hotels</h5>
+            <h5 class="card-title mb-1 fw-bold">Hotels</h5>
             <p class="card-text text-muted mb-0">
               Browse and manage hotels.
             </p>
           </div>
-          <button class="btn btn-outline-primary btn-sm" type="button" (click)="loadHotels()">
+          <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="button" (click)="loadHotels()">
             <i class="bi bi-arrow-repeat me-1"></i> Refresh
           </button>
         </div>
       </div>
-      <div class="card">
+
+      <!-- 2. BANDEAU PÉDAGOGIQUE (LE GUIDE) -->
+      <div class="alert alert-primary border-0 bg-opacity-10 shadow-sm rounded-4 mb-4">
+        <div class="d-flex align-items-center">
+          <span class="fs-3 me-3">🔬</span>
+          <div>
+            <h6 class="mb-1 fw-bold">Démonstration : Observable Simple</h6>
+            <p class="small mb-0 text-secondary">
+              L'Observable est un <strong>flux froid (Cold)</strong>. Rien ne se passe tant qu'on ne
+              clique pas sur <strong>"Refresh"</strong> (le <code>subscribe</code>). Chaque clic
+              réactive le robinet pour émettre une nouvelle liste.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. LA LISTE DES HOTELS -->
+      <div class="card border-0 shadow-sm">
         <div class="card-body">
           @if (loading) {
             <div class="text-center my-4">
@@ -27,15 +45,15 @@
               {{ error }}
             </div>
           } @else if (hotels.length === 0) {
-            <p class="text-muted mb-0">
+            <p class="text-muted mb-0 text-center py-4">
               No hotels available.
             </p>
-          }
-          @else {
+          } @else {
             <div class="row g-4">
               @for (hotelP of hotels; track hotelP.id) {
                 <div class="col-md-4 col-lg-3">
                   <app-hotel-card
+                    class="h-100"
                     [hotelF]="hotelP"
                     (select)="onSelectHotel($any($event))">
                   </app-hotel-card>
@@ -45,6 +63,25 @@
           }
         </div>
       </div>
+
+      <!-- 4. FOOTER DOCUMENTATION -->
+      <div class="card bg-light border-0 rounded-4 shadow-sm mt-5">
+        <div class="card-body d-flex align-items-center justify-content-between p-3">
+          <div class="d-flex align-items-center">
+            <span class="fs-4 me-3">📖</span>
+            <div>
+              <h6 class="mb-0 fw-bold">Comprendre la logique derrière ce code</h6>
+              <small class="text-muted">Consultez la documentation détaillée sur le fonctionnement de l'Observable Simple.</small>
+            </div>
+          </div>
+          <a href="https://github.com/ericNyandw/angular-rxjs-lab/tree/master/src/app/features/observable-simple#readme"
+             target="_blank"
+             class="btn btn-primary btn-sm rounded-pill px-4 shadow-sm">
+            Voir le README
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
