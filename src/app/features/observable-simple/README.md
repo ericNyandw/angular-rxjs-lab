@@ -89,6 +89,12 @@ ngOnDestroy() {
 ---
 ⚙️ Caractéristiques principales
 - 🔹 **Unicast** : Chaque souscription crée une nouvelle exécution de la source (ex: une nouvelle requête HTTP est lancée pour chaque abonné).
+- 🔹 **L'Observer (L'écouteur)**  
+  C'est l'objet qui reçoit les notifications. Il possède **3 méthodes (ou "oreilles")** :
+  - `next` : pour recevoir la donnée.
+  - `error` : pour gérer les problèmes.
+  - `complete` : pour savoir quand le flux est terminé.
+
 - 🔹 **Asynchrone** : Idéal pour attendre une réponse du serveur sans bloquer l'interface utilisateur.
 - 🔹 **Gestion des erreurs** : L'objet Observer possède une méthode error dédiée pour attraper les problèmes réseau proprement.
 - 🔹 **Memory Leaks** : Un flux ouvert doit être fermé (unsubscribe) quand le composant est détruit pour ne pas gaspiller la mémoire.
